@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <head>
+        <title>Expences!</title>
+    </head>
+    <link rel="stylesheet" href="static_content/styles/index.css?v=3">
+
+    <style>
+
+        #loading_holder {
+            position: fixed;
+            top:-10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background-color: #3e3e3e;
+            opacity: 0.9;
+            z-index: 998;
+            text-align: center;
+        }
+
+        .loader {
+            position: fixed;
+            top: 20%;
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-bottom: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            padding: 0px;
+            margin: 0px;
+            animation: spin 1.5s linear infinite;
+            left: calc((100vw - 120px)/2);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+
+
+        #warning_holder {
+            z-index: 999;
+        }
+        #error_holder {
+            z-index: 999;
+        }
+        
+    </style>
+<body>
+    <!-- <div id="loading_bar">Loading</div> -->
+    <div id="loading_holder"><div class="loader"></div></div>
+
+    <div id="login_window">
+        <div id="login_form">
+            <input class="login_input_field" type="text" id="username_field" name="username" placeholder="Username" autocomplete="off" /> <br />
+            <input class="login_input_field" type="password" id="password_field" name="password" placeholder="Password" autocomplete="off" /> <br />
+            <div>
+                <button id="sign-up" class="btn_blk"> Sign Up </button>
+                <button id="login" class="btn_sky"> Log In </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="expences_window">
+
+        <div id="select_filter">
+            <span class="filter_txt">Get from</span>
+            <select id="filter_thread" class="filter_ip" required="required">
+                <option value="current" selected="true">current</option>
+                <option value="all">all</option>
+                <option value="last">previous</option>
+                <option value="last_two">last two</option>
+                <option value="2nd_last">before previous</option>
+                <option value="last_three">last three</option>
+            </select>
+            <span class="filter_txt">Threads where <br /> spend is</span>
+            <select id="filter_spend"  class="filter_ip" required="required">
+                <option value="any" selected="true">any</option>
+                <option value="posetive">posetive</option>
+                <option value="negative">negative</option>
+            </select>
+            <span class="filter_txt">and Expence Type is</span>
+            <select id="filter_expence_type"  class="filter_ip" required="required">
+                <option value="any">any</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select> <br />
+            <span class="filter_txt">between dates</span>
+            <input type="date"  class="filter_ip" id="filter_start_date" value="2020-01-01">
+            <input type="date"  class="filter_ip" id="filter_end_date" value="2030-01-01">
+            </select>
+            <div>
+                <button id="filter_button" class="btn_sky">Filter</button>
+            </div>
+        </div>
+
+        <div id="expences_list"></div>
+        <div id="analytics_data"></div>
+        <button id="logout" class="btn_blk"> Log Out! </button>
+        <button id="undo_insert" class="btn_red"> UnDo last insert </button>
+        <button id="show_add_data_window" class="btn_green"> Add new Data </button>
+    </div>
+
+    <div id="add_data_window">
+        <form action="GET">
+            <div>
+                <span class="add_data_title">Item name<sup class="requirred_star">*</sup></span>
+                <input type="text" class="add_data_input_field" name="item" id="insert_item" required="required" placeholder="Item" autocomplete="off" />
+            </div>
+            <div>
+                <span class="add_data_title">Value<sup class="requirred_star">*</sup></span>
+                <input type="number" min="-999999" max="999999" class="add_data_input_field"  name="value" id="insert_value" required="required" placeholder="Value" autocomplete="off" />
+            </div>
+            <div>
+                <span class="add_data_title">Expence Type<sup class="requirred_star">*</sup></span>
+                <select name="type" class="add_data_input_field"  id="expence_type" required="required">
+                    <!-- <option value="" selected="true" disabled>-- Expence type --</option> -->
+                    <option value="1">Type 1</option>
+                    <option value="2">Type 2</option>
+                    <option value="3">Type 3</option>
+                    <option value="4">Type 4</option>
+                    <option value="5">Type 5</option>
+                    <option value="6">Type 6</option>
+                </select>
+            </div>
+            <div>
+                <span class="add_data_title">Date & Time<sup class="requirred_star"> </sup></span>
+                <input type="datetime-local" class="add_data_input_field"  id="insert_time" name="timestamp" placeholder="time" autocomplete="off" />
+            </div>
+            <div>
+                <!-- <span class="add_data_title"><input type="checkbox" id="start_new_thread" />Start as new thread</span> -->
+            </div>
+            <div>
+                <span class="add_data_title"><input type="checkbox" id="start_new_thread" /> Start as new thread</span>
+                <button class="add_data_btn btn_green" id="submit_add_data" class="btn_green"> Submit </button>
+                <button class="add_data_btn btn_red" id="close_add_data" class="btn_red"> Close </button>
+            </div>
+        </form>
+    </div>
+
+    <div id="msg_holder"></div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+</body>
+<script type="text/javascript" src="static_content/scripts/parms.js"></script>
+<script type="text/javascript" src="static_content/scripts/functions.js?v=1"></script>
+<script type="text/javascript" src="static_content/scripts/main.js?v=1"></script>
+<script type="text/javascript" src="static_content/scripts/button_listeners.js?v=1"></script>
+</html>
+
