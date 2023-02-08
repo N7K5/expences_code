@@ -83,12 +83,47 @@ function make_table_with_data(data_arr) {
         res+='<th class="dt_time date_clr_'+date_clr+ ' '+ thread_updated_class + '"> '+d.getDate() +"" +months[d.getMonth()];
         res+=' '+to_two_digit(d.getHours()) +":" +to_two_digit(d.getMinutes())+"</th>";
         res+='<th class="etype_'+data.expence_type+ ' '+ thread_updated_class + '"> '+data.item+" </th>";
-        if(data.cost>=0) {
-            res+='<th class="cost_posetive'+ ' '+ thread_updated_class + '"> '+data.cost+" </th>";
+        let cost_class= '';
+        if(data.cost<=-8000) {
+            cost_class= 'cost_neg_6';
+        }
+        if(data.cost<=-5000) {
+            cost_class= 'cost_neg_5';
+        }
+        else if(data.cost<=-1900) {
+            cost_class= 'cost_neg_4';
+        }
+        else if(data.cost<=-1000) {
+            cost_class= 'cost_neg_3';
+        }
+        else if(data.cost<=-500) {
+            cost_class= 'cost_neg_2';
+        }
+        else if(data.cost<=-100) {
+            cost_class= 'cost_neg_1';
+        }
+        else if(data.cost<0) {
+            cost_class= 'cost_neg_0';
+        }
+        else if(data.cost<100) {
+            cost_class= 'cost_pos_1';
+        }
+        else if(data.cost<700) {
+            cost_class= 'cost_pos_2';
+        }
+        else if(data.cost<2000) {
+            cost_class= 'cost_pos_3';
+        }
+        else if(data.cost<5000) {
+            cost_class= 'cost_pos_4';
+        }
+        else if(data.cost<10000) {
+            cost_class= 'cost_pos_5';
         }
         else {
-            res+='<th class="cost_negative'+ ' '+ thread_updated_class + '"> '+data.cost+" </th>";
+            cost_class= 'cost_pos_6';
         }
+        res+='<th class="'+ cost_class + ' '+ thread_updated_class + '"> '+data.cost+" </th>";
         res+="</tr>";
 
         thread_updated_class= '';
@@ -117,4 +152,16 @@ function show_add_data_window() {
 function hide_add_data_window() {
     expences_window.style.filter= "";
     add_data_window.style.display= "none";
+}
+
+function fill_expence_type_opts(div_to_insert_into) {
+
+
+    for(let v of expences_types) {
+        let key= v[0],  val= v[1];
+        let el= document.createElement('option');
+        el.value= key;
+        el.innerHTML= val;
+        div_to_insert_into.appendChild(el);
+    }
 }

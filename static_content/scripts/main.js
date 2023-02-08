@@ -10,6 +10,9 @@ window.addEventListener('load', () => {
     
     render_window();
 
+    fill_expence_type_opts(document.getElementById('expence_type'));
+    fill_expence_type_opts(document.getElementById('filter_expence_type'));
+
     hide_loading();
 }, false);
 

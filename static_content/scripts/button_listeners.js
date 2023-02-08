@@ -287,3 +287,15 @@ document.getElementById("undo_insert").addEventListener('click', e => {
 
 
 
+
+
+
+document.getElementById('expence_type').addEventListener('change', e => {
+    let new_classname= document.getElementById('expence_type').className.split(" ")[0]+" etype_"+document.getElementById('expence_type').value;
+    document.getElementById('expence_type').className= new_classname;
+}, false)
+
+document.getElementById('filter_expence_type').addEventListener('change', e => {
+    let new_classname= document.getElementById('filter_expence_type').className.split(" ")[0]+" etype_"+document.getElementById('filter_expence_type').value;
+    document.getElementById('filter_expence_type').className= new_classname;
+}, false)

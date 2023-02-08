@@ -45,30 +45,11 @@ if(isset($_GET['spend_amnt'])) {
 }
 
 if(isset($_GET['expence_type'])) {
-    if($_GET['expence_type'] == 1) {
-        $sql.=' AND expence_type = 1';
+
+    if($_GET['expence_type'] != 'any') {
+        $sql.=' AND expence_type = '.$_GET['expence_type'];
     }
-    if($_GET['expence_type'] == 2) {
-        $sql.=' AND expence_type = 2';
-    }
-    if($_GET['expence_type'] == 3) {
-        $sql.=' AND expence_type = 3';
-    }
-    if($_GET['expence_type'] == 4) {
-        $sql.=' AND expence_type = 4';
-    }
-    if($_GET['expence_type'] == 5) {
-        $sql.=' AND expence_type = 5';
-    }
-    if($_GET['expence_type'] == 6) {
-        $sql.=' AND expence_type = 6';
-    }
-    if($_GET['expence_type'] == 7) {
-        $sql.=' AND expence_type = 7';
-    }
-    if($_GET['expence_type'] == 8) {
-        $sql.=' AND expence_type = 8';
-    }
+    
 }
 
 $sql.=' ORDER BY timestamp';
